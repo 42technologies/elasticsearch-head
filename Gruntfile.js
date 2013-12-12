@@ -50,6 +50,12 @@ module.exports = function(grunt) {
 				cwd: 'src/app/lang/',
 				src: '**',
 				dest: 'dist/lang/'
+			},
+			ace: {
+				expand: true,
+				cwd: 'src/vendor/ace',
+				src: '**',
+				dest: 'dist/ace'
 			}
 		},
 
@@ -91,7 +97,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 
 	// Default task(s).
-	grunt.registerTask('default', ['clean', 'concat', 'copy', 'jasmine']);
+	grunt.registerTask('default', ['clean', 'concat', 'copy']);
 	grunt.registerTask('server', ['connect:server']);
 
 

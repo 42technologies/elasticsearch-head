@@ -2423,12 +2423,21 @@
 		},
 		init: function(parent) {
 			this._super();
+
 			this.history = app.services.storage.get("anyRequestHistory") || [ { type: "POST", path: this.config.path, query : JSON.stringify(this.config.query), transform: this.config.transform } ];
 			this.el = $(this._main_template());
+
+			ace.config.set("modePath",   "/dist/ace");
+			ace.config.set("workerPath", "/dist/ace");
+			ace.config.set("themePath",  "/dist/ace");
+
+			this.editorContainerEl = this.el.find("DIV[name=body]");
+			this.editor = ace.edit(this.editorContainerEl[0]);
+			this.editor.getSession().setMode("ace/mode/json");
+
 			this.base_uriEl = this.el.find("INPUT[name=base_uri]");
 			this.pathEl = this.el.find("INPUT[name=path]");
 			this.typeEl = this.el.find("SELECT[name=method]");
-			this.dataEl = this.el.find("TEXTAREA[name=body]");
 			this.prettyEl = this.el.find("INPUT[name=pretty]");
 			this.transformEl = this.el.find("TEXTAREA[name=transform]");
 			this.asGraphEl = this.el.find("INPUT[name=asGraph]");
@@ -2444,7 +2453,7 @@
 		setHistoryItem: function(item) {
 			this.pathEl.val(item.path);
 			this.typeEl.val(item.type);
-			this.dataEl.val(item.query);
+			this.editor.getSession().setValue(item.query);
 			this.transformEl.val(item.transform);
 		},
 		_request_handler: function(jEv) {
@@ -2453,7 +2462,7 @@
 			}
 			var path = this.pathEl.val(),
 					type = this.typeEl.val(),
-					query = JSON.stringify(JSON.parse(this.dataEl.val())),
+					query = JSON.stringify(JSON.parse(this.editor.getSession().getValue())),
 					transform = this.transformEl.val(),
 					base_uri = this.base_uriEl.val();
 			if(jEv && jEv.originalEvent) { // if the user click request
@@ -2543,11 +2552,11 @@
 		},
 		_validateJson_handler: function(jEv) {
 			/* if the textarea is empty, we replace its value by an empty JSON object : "{}" and the request goes on as usual */
-			var jsonData = this.dataEl.val().trim();
+			var jsonData = this.editor.getSession().getValue().trim();
 			var j;
 			if(jsonData === "") {
 				jsonData = "{}";
-				this.dataEl.val( jsonData );
+				this.editor.getSession().setValue( jsonData );
 			}
 			try {
 				j = JSON.parse(jsonData);
@@ -2557,7 +2566,7 @@
 			}
 			this.errEl.text("");
 			if(this.prettyEl.attr("checked")) {
-				this.dataEl.val(JSON.stringify(j, null, "  "));
+				this.editor.getSession().setValue(JSON.stringify(j, null, "  "));
 			}
 			return true;
 		},
@@ -2584,7 +2593,7 @@
 							{ tag: "BR" },
 							{ tag: "INPUT", type: "text", name: "path", value: this.config.path },
 							{ tag: "SELECT", name: "method", children: ["POST", "GET", "PUT", "DELETE"].map(ut.option_template) },
-							{ tag: "TEXTAREA", name: "body", rows: 20, text: JSON.stringify(this.config.query) },
+							{ tag: "DIV", name: "body", rows: 20, text: JSON.stringify(this.config.query) },
 							{ tag: "BUTTON", css: { cssFloat: "right" }, type: "button", child: { tag: "B", text: i18n.text("AnyRequest.Request") }, onclick: this._request_handler },
 							{ tag: "BUTTON", type: "button", text: i18n.text("AnyRequest.ValidateJSON"), onclick: this._validateJson_handler },
 							{ tag: "LABEL", children: [ { tag: "INPUT", type: "checkbox", name: "pretty" }, i18n.text("AnyRequest.Pretty") ] },
@@ -2643,7 +2652,7 @@
 			] };
 		}
 	});
-	
+
 })( this.jQuery, this.app, this.i18n, this.Raphael );
 
 (function( app, i18n ) {

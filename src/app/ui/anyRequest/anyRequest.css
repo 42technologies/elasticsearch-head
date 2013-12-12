@@ -5,11 +5,17 @@
 	background: #d8e7ff;
 	background: -moz-linear-gradient(left, #d8e7ff, #e8f1ff);
 	background: -webkit-linear-gradient(left, #d8e7ff, #e8f1ff);
+	position: relative;
 }
 
 .uiAnyRequest-request INPUT[type=text],
-.uiAnyRequest-request TEXTAREA {
+.uiAnyRequest-request DIV[name=body] {
 	width: 340px;
+}
+
+.uiAnyRequest-request .ace_editor {
+	height: 350px;
+	position: relative;
 }
 
 .anyRequest INPUT[name=path] {
