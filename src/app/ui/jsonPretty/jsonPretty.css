@@ -1,4 +1,4 @@
-DIV.uiJsonPretty-object { font-size: 1.26em; font-family: monospace; }
+.uiJsonPretty { font-size: 1.26em; font-family: monospace; }
 UL.uiJsonPretty-object,
 UL.uiJsonPretty-array { margin: 0; padding: 0 0 0 2em; list-style: none; }
 UL.uiJsonPretty-object LI,
@@ -25,4 +25,3 @@ SPAN.uiJsonPretty-boolean { color: purple; }
 .uiJsonPretty-minimised > UL { opacity: 0.6; }
 .uiJsonPretty-minimised .uiJsonPretty-minimised > UL { opacity: 1; }
 .uiJsonPretty-minimised UL, .uiJsonPretty-minimised LI { display: inline; padding: 0; }
-

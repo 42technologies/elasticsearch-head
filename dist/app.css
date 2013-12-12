@@ -333,6 +333,7 @@
 	background: #6060f1;
 }
 
+.uiJsonPretty { font-size: 1.26em; font-family: monospace; }
 DIV.uiJsonPretty-object { font-size: 1.26em; font-family: monospace; }
 UL.uiJsonPretty-object,
 UL.uiJsonPretty-array { margin: 0; padding: 0 0 0 2em; list-style: none; }
@@ -360,7 +361,6 @@ SPAN.uiJsonPretty-boolean { color: purple; }
 .uiJsonPretty-minimised > UL { opacity: 0.6; }
 .uiJsonPretty-minimised .uiJsonPretty-minimised > UL { opacity: 1; }
 .uiJsonPretty-minimised UL, .uiJsonPretty-minimised LI { display: inline; padding: 0; }
-
 
 .uiJsonPanel SPAN.uiJsonPretty-string { color: #6F6; }
 .uiJsonPanel SPAN.uiJsonPretty-number { color: #66F; }
